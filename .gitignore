@@ -3,3 +3,10 @@ dist/
 out/
 .DS_Store
 .env
+
+# Node.js dependencies
+node_modules/
+
+# Electron build outputs
+dist/
+out/
