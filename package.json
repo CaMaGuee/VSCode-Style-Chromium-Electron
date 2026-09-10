@@ -1,10 +1,8 @@
 {
   "name": "chromium-workbench",
   "version": "1.0.0",
-  "description": "개발용 로컬 데스크톱 워크벤치 (Electron, Chromium WebContentsView, node-pty, xterm.js)",
+  "description": "Chromium browser workbench with bookmark, notes and terminal",
   "main": "src/main/main.js",
-  "author": "Chromium Workbench Team",
-  "license": "MIT",
   "scripts": {
     "start": "electron .",
     "postinstall": "node scripts/copy-xterm.js && electron-builder install-app-deps",
@@ -12,15 +10,6 @@
     "dist:mac": "electron-builder --mac",
     "dist:win": "electron-builder --win",
     "dist:linux": "electron-builder --linux"
-  },
-  "dependencies": {
-    "node-pty": "^1.1.0",
-    "@xterm/xterm": "^6.0.0",
-    "@xterm/addon-fit": "^0.11.0"
-  },
-  "devDependencies": {
-    "electron": "^44.3.0",
-    "electron-builder": "^26.16.1"
   },
   "build": {
     "appId": "com.chromiumworkbench.app",
@@ -31,20 +20,50 @@
     "files": [
       "src/**/*",
       "assets/**/*",
+      "scripts/**/*",
       "package.json"
     ],
+    "asar": true,
     "asarUnpack": [
       "**/node_modules/node-pty/**/*"
     ],
     "mac": {
-      "target": ["dmg"]
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "category": "public.app-category.developer-tools"
     },
     "win": {
-      "target": ["nsis"]
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
     },
     "linux": {
-      "target": ["AppImage", "deb"]
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Development"
     }
   }
 }
-
