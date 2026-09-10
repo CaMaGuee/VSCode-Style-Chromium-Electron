@@ -1,0 +1,158 @@
+/**
+ * @file style.css
+ * @description Chromium Workbench Shell UI 스타일 시트.
+ */
+
+:root {
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --top-bar-height: 52px;
+  --left-panel-width: 240px;
+  --right-panel-width: 320px;
+  --terminal-height: 250px;
+}
+
+html[data-theme="dark"] {
+  --bg-app: #181a1f; --bg-panel: #21252b; --bg-input: #282c34; --bg-hover: #2c313a;
+  --border-color: #181a1f; --text-primary: #abb2bf; --text-secondary: #5c6370;
+  --accent-color: #61afef; --danger-color: #e06c75; --success-color: #98c379; --scrollbar-thumb: #3e4451;
+}
+
+html[data-theme="light"] {
+  --bg-app: #f0f2f5; --bg-panel: #ffffff; --bg-input: #f8f9fa; --bg-hover: #e9ecef;
+  --border-color: #ced4da; --text-primary: #212529; --text-secondary: #6c757d;
+  --accent-color: #0d6efd; --danger-color: #dc3545; --success-color: #198754; --scrollbar-thumb: #adb5bd;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  user-select: none;
+  font-size: 13px;
+}
+
+.workbench-container {
+  display: grid;
+  grid-template-rows: var(--top-bar-height) 1fr var(--terminal-height);
+  grid-template-columns: var(--left-panel-width) 1fr var(--right-panel-width);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.top-bar {
+  grid-row: 1; grid-column: 1 / 4;
+  background-color: var(--bg-panel); border-bottom: 1px solid var(--border-color);
+  display: flex; align-items: center; padding: 0 12px; gap: 8px;
+}
+
+.nav-buttons { display: flex; gap: 4px; }
+.btn {
+  background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border-color);
+  padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 13px;
+  display: inline-flex; align-items: center; justify-content: center; transition: background 0.2s;
+}
+.btn:hover:not(:disabled) { background: var(--bg-hover); border-color: var(--accent-color); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.url-container { flex: 1; display: flex; align-items: center; }
+.url-input {
+  width: 100%; background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border-color);
+  padding: 6px 12px; border-radius: 4px; font-size: 13px; outline: none;
+}
+.url-input:focus { border-color: var(--accent-color); }
+
+.status-msg {
+  font-size: 12px; color: var(--text-secondary); max-width: 250px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-left: 8px;
+}
+
+.left-panel {
+  grid-row: 2; grid-column: 1;
+  background-color: var(--bg-panel); border-right: 1px solid var(--border-color);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.panel-header {
+  padding: 12px; font-weight: 600; border-bottom: 1px solid var(--border-color);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.panel-content { flex: 1; overflow-y: auto; padding: 8px; }
+.section-title { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px; }
+
+.bookmark-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.bookmark-item {
+  display: flex; align-items: center; justify-content: space-between; padding: 6px 8px;
+  border-radius: 4px; cursor: pointer; background: var(--bg-input); transition: background 0.15s;
+}
+.bookmark-item:hover { background: var(--bg-hover); }
+.bookmark-info { flex: 1; overflow: hidden; margin-right: 6px; }
+.bookmark-title { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-primary); }
+.bookmark-url { font-size: 11px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bookmark-del-btn { background: transparent; border: none; color: var(--text-secondary); cursor: pointer; padding: 2px 6px; border-radius: 3px; }
+.bookmark-del-btn:hover { background: var(--danger-color); color: #fff; }
+.empty-notice { text-align: center; color: var(--text-secondary); padding: 20px; font-size: 12px; }
+
+.center-area {
+  grid-row: 2;
+  grid-column: 2;
+  min-width: 0;
+  min-height: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.right-panel {
+  grid-row: 2; grid-column: 3;
+  background-color: var(--bg-panel); border-left: 1px solid var(--border-color);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.tool-section { padding: 12px; border-bottom: 1px solid var(--border-color); }
+.memo-section { flex: 1; display: flex; flex-direction: column; padding: 12px; overflow: hidden; }
+.current-url-display {
+  font-size: 11px; color: var(--accent-color); word-break: break-all; margin-bottom: 8px;
+  background: var(--bg-input); padding: 6px; border-radius: 4px; border: 1px solid var(--border-color);
+}
+.memo-textarea {
+  flex: 1; width: 100%; background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border-color);
+  border-radius: 4px; padding: 8px; font-family: var(--font-family); font-size: 13px; resize: none; outline: none; margin-bottom: 8px;
+}
+.memo-textarea:focus { border-color: var(--accent-color); }
+.memo-actions { display: flex; justify-content: space-between; align-items: center; }
+.save-status { font-size: 11px; color: var(--success-color); }
+
+.settings-group { display: flex; flex-direction: column; gap: 6px; }
+.theme-select {
+  background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border-color);
+  padding: 6px; border-radius: 4px; font-size: 13px; outline: none; width: 100%;
+}
+
+.terminal-panel {
+  grid-row: 3; grid-column: 1 / 4;
+  background-color: var(--bg-panel); border-top: 1px solid var(--border-color);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.terminal-header {
+  padding: 6px 12px; background: var(--bg-input); border-bottom: 1px solid var(--border-color);
+  font-weight: 600; font-size: 11px; color: var(--text-secondary);
+}
+.terminal-body { flex: 1; background-color: var(--bg-app); padding: 4px; overflow: hidden; }
+.terminal-error {
+  padding: 16px;
+  color: var(--danger-color);
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
+

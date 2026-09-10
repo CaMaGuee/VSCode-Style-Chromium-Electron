@@ -1,0 +1,50 @@
+{
+  "name": "chromium-workbench",
+  "version": "1.0.0",
+  "description": "개발용 로컬 데스크톱 워크벤치 (Electron, Chromium WebContentsView, node-pty, xterm.js)",
+  "main": "src/main/main.js",
+  "author": "Chromium Workbench Team",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "postinstall": "node scripts/copy-xterm.js && electron-builder install-app-deps",
+    "dist": "electron-builder",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux"
+  },
+  "dependencies": {
+    "node-pty": "^1.1.0",
+    "@xterm/xterm": "^6.0.0",
+    "@xterm/addon-fit": "^0.11.0"
+  },
+  "devDependencies": {
+    "electron": "^44.3.0",
+    "electron-builder": "^26.16.1"
+  },
+  "build": {
+    "appId": "com.chromiumworkbench.app",
+    "productName": "Chromium Workbench",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "**/node_modules/node-pty/**/*"
+    ],
+    "mac": {
+      "target": ["dmg"]
+    },
+    "win": {
+      "target": ["nsis"]
+    },
+    "linux": {
+      "target": ["AppImage", "deb"]
+    }
+  }
+}
+

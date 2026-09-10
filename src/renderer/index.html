@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <title>Chromium Workbench</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="vendor/xterm/xterm.css">
+  <script src="vendor/xterm/xterm.js"></script>
+  <script src="vendor/xterm/xterm-addon-fit.js"></script>
+</head>
+<body>
+  <div class="workbench-container">
+    <!-- 상단 네비게이션 바 -->
+    <header class="top-bar">
+      <div class="nav-buttons">
+        <button id="back-btn" class="btn" title="뒤로가기" disabled>←</button>
+        <button id="forward-btn" class="btn" title="앞으로가기" disabled>→</button>
+        <button id="reload-btn" class="btn" title="새로고침">⟳</button>
+      </div>
+      <div class="url-container">
+        <input type="text" id="url-input" class="url-input" placeholder="URL을 입력하세요 (예: https://example.com)" />
+      </div>
+      <div class="nav-buttons">
+        <button id="add-bookmark-btn" class="btn" title="현재 페이지 북마크 추가">+ 북마크</button>
+        <button id="devtools-btn" class="btn" title="DevTools 열기">DevTools</button>
+      </div>
+      <div id="status-msg" class="status-msg" title="상태 메시지">준비됨</div>
+    </header>
+
+    <!-- 좌측 탐색기 / 북마크 패널 -->
+    <aside class="left-panel">
+      <div class="panel-header">
+        <span>탐색기</span>
+      </div>
+      <div class="panel-content">
+        <div class="section-title">북마크</div>
+        <ul id="bookmark-list" class="bookmark-list">
+          <!-- 북마크 아이템이 동적으로 로드됩니다 -->
+        </ul>
+        <div id="bookmark-empty" class="empty-notice">저장된 북마크가 없습니다.</div>
+      </div>
+    </aside>
+
+    <!-- 중앙 Chromium 브라우저 영역 (WebContentsView가 얹어지는 플레이스홀더) -->
+    <main class="center-area"></main>
+
+    <!-- 우측 도구 패널 (페이지 메모 및 설정) -->
+    <aside class="right-panel">
+      <div class="panel-header">
+        <span>도구</span>
+      </div>
+
+      <!-- 페이지 메모 섹션 -->
+      <section class="memo-section">
+        <div class="section-title">페이지 메모</div>
+        <div id="current-url-display" class="current-url-display">URL: -</div>
+        <textarea id="memo-textarea" class="memo-textarea" placeholder="현재 URL에 대한 메모를 입력하세요 (자동 저장)..."></textarea>
+        <div class="memo-actions">
+          <span id="save-status" class="save-status"></span>
+          <button id="delete-memo-btn" class="btn" style="font-size: 11px; padding: 4px 8px;">메모 삭제</button>
+        </div>
+      </section>
+
+      <!-- 설정 섹션 (테마 선택) -->
+      <section class="tool-section">
+        <div class="section-title">설정</div>
+        <div class="settings-group">
+          <label for="theme-select" style="font-size: 12px; color: var(--text-secondary);">테마</label>
+          <select id="theme-select" class="theme-select">
+            <option value="system">시스템 설정</option>
+            <option value="dark">다크</option>
+            <option value="light">라이트</option>
+          </select>
+        </div>
+      </section>
+    </aside>
+
+    <!-- 하단 실제 터미널 영역 -->
+    <footer class="terminal-panel">
+      <div class="terminal-header">TERMINAL</div>
+      <div id="terminal-body" class="terminal-body"></div>
+    </footer>
+  </div>
+
+  <!-- 렌더러 스크립트 로드 -->
+  <script src="renderer.js"></script>
+</body>
+</html>
